@@ -1,3 +1,3 @@
 # botlaguerre
 
-botlaguerre.subtoemail.fr
+<a href="botlaguerre.subtoemail.fr">botlaguerre.subtoemail.fr</a>
