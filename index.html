@@ -29,7 +29,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         select {
-            width: 420px;
+            width: 360px;
             font-size: 20px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
@@ -92,6 +92,7 @@
     </style>
     <script src="infos.js"></script>
     <script>
+        console.log(fetch("infos.js"))
         window.onload = function(){
             liste = {libre:[],break:[],ally1:[],ally2:[],ally12:[],conquer:[]}
             for(let i=0; i<Object.keys(infos).length; i++) {
@@ -136,7 +137,12 @@
                 opt.innerHTML = "conquiert"
                 document.getElementById("cmd").appendChild(opt)
             }
+
+            for(let i=0; i<Object.keys(liste).length; i++){
+                liste[Object.keys(liste)[i]].sort(function (a, b) {return a.localeCompare(b);});
+            }
         }
+
         function changeCmd(){
             document.getElementById("cmd").disabled = true;
             document.getElementById("pays2").removeAttribute('disabled');
