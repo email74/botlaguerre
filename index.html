@@ -1,1 +1,261 @@
-çççç
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #all{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            flex-direction: column;
+        }
+        #buttons{
+            display:flex;
+            margin-top:50px;
+        }
+        img {
+            height: 600px;
+            margin-top:50px;
+            border-radius: 20px;
+            border: 10px solid black;
+        }
+        b {
+            font-size: 60px;
+            margin-top: 40px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        select {
+            width: 360px;
+            font-size: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin-left:16px;
+            margin-right:16px;
+            font-weight: 500;
+            color:black;
+        }
+        button {
+            font-size: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin-left:16px;
+            margin-right:16px;
+            font-weight: 500;
+        }
+        option {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            font-weight: 500;
+        }
+        select#cmd {
+            width: 200px;
+        }
+        #tweet {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: absolute;
+            background-color: rgb(21,32,43);
+            text-decoration: none;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            border-radius: 50px;
+            font-weight: 500;
+            animation: s 1s forwards;
+            z-index: 1;
+        }
+        #tweettext {
+            background-color: rgb(21,32,43);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color:white;
+            font-size:40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #envoyer {
+            margin-top:10px;
+            color:white;
+        }
+
+        @keyframes s {
+            0% {top:0px;}
+            100% {top:33%}
+        }
+    </style>
+    <script src="infos.js"></script>
+    <script>
+        window.onload = function(){
+            liste = {libre:[],break:[],ally1:[],ally2:[],ally12:[],conquer:[]}
+            for(let i=0; i<Object.keys(infos).length; i++) {
+                if(Object.values(infos)[i][0].length > 1){
+                    liste.break.push(Object.keys(infos)[i])
+                }
+                if(Object.values(infos)[i][1] === 0){
+                    liste.libre.push(Object.keys(infos)[i])
+                } else if (Object.values(infos)[i][1] === 1){
+                    liste.ally1.push(Object.keys(infos)[i])
+                    liste.ally12.push(Object.keys(infos)[i])
+                    liste.conquer.push(Object.keys(infos)[i])
+                } else if (Object.values(infos)[i][1] === 2){
+                    liste.ally2.push(Object.keys(infos)[i])
+                    liste.ally12.push(Object.keys(infos)[i])
+                    liste.conquer.push(Object.keys(infos)[i])
+                } else if (Object.values(infos)[i][1] > 2){
+                    liste.conquer.push(Object.keys(infos)[i])
+                }
+            }
+            if(liste.libre.length != 0){
+                var opt = document.createElement('option');
+                opt.value = "libre"
+                opt.innerHTML = "indépendance"
+                document.getElementById("cmd").appendChild(opt)
+            }
+            if(liste.break.length != 0){
+                var opt = document.createElement('option');
+                opt.value = "break"
+                opt.innerHTML = "détruire"
+                document.getElementById("cmd").appendChild(opt)
+            }
+            if(liste.ally12.length > 1){
+                var opt = document.createElement('option');
+                opt.value = "ally"
+                opt.innerHTML = "ally"
+                document.getElementById("cmd").appendChild(opt)
+            }
+            if(liste.conquer.length > 1){
+                var opt = document.createElement('option');
+                opt.value = "conquer"
+                opt.innerHTML = "conquiert"
+                document.getElementById("cmd").appendChild(opt)
+            }
+        }
+        function changeCmd(){
+            document.getElementById("cmd").disabled = true;
+            document.getElementById("pays2").removeAttribute('disabled');
+
+            if(document.getElementById("cmd").value === "libre"){
+                for(let i=0; i<liste.libre.length; i++){
+                    var opt = document.createElement('option');
+                    opt.value = liste.libre[i]
+                    opt.innerHTML = liste.libre[i]
+                    document.getElementById("pays2").appendChild(opt)
+                }
+            } 
+            
+            else if(document.getElementById("cmd").value === "break"){
+                for(let i=0; i<liste.break.length; i++){
+                    var opt = document.createElement('option');
+                    opt.value = liste.break[i]
+                    opt.innerHTML = liste.break[i]
+                    document.getElementById("pays2").appendChild(opt)
+                }
+
+            } else if(document.getElementById("cmd").value === "ally"){
+                document.getElementById("pays1").removeAttribute('disabled');
+                for(let i=0; i<liste.ally12.length; i++){
+                    var opt = document.createElement('option');
+                    opt.value = liste.ally12[i]
+                    opt.innerHTML = liste.ally12[i]
+                    var opt2 = document.createElement('option');
+                    opt2.value = liste.ally12[i]
+                    opt2.innerHTML = liste.ally12[i]
+                    document.getElementById("pays1").appendChild(opt)
+                    document.getElementById("pays2").appendChild(opt2)
+                }
+            
+            } else if (document.getElementById("cmd").value === "conquer"){
+                document.getElementById("pays1").removeAttribute('disabled');
+                for(let i=0; i<liste.conquer.length; i++){
+                    var opt = document.createElement('option');
+                    opt.value = liste.conquer[i]
+                    opt.innerHTML = liste.conquer[i]
+                    var opt2 = document.createElement('option');
+                    opt2.value = liste.conquer[i]
+                    opt2.innerHTML = liste.conquer[i]
+                    document.getElementById("pays1").appendChild(opt)
+                    document.getElementById("pays2").appendChild(opt2)
+                }
+            }
+        }
+        function change(){
+            if(document.getElementById("cmd").value === "libre" || document.getElementById("cmd").value === "break"){
+                if(document.getElementById("pays1").disabled){
+                        document.getElementById("pays2").disabled = "true";
+                    } else {
+                        document.getElementById("pays1").disabled = "true";
+                    }
+                    document.getElementById("valider").focus()
+            }
+
+            else if(document.getElementById("cmd").value === "ally" || document.getElementById("cmd").value === "conquer"){
+                if(document.getElementById("pays2").value === "none" && document.getElementById("pays1").value != "none"){
+                    for (var i=0; i<document.getElementById("pays2").length; i++) {
+                        if (document.getElementById("pays2").options[i].value === document.getElementById("pays1").value){
+                            document.getElementById("pays2").remove(i);
+                        }
+                    }
+                    document.getElementById("pays1").disabled = "true";
+                } else if(document.getElementById("pays1").value === "none" && document.getElementById("pays2").value != "none"){
+                    for (var i=0; i<document.getElementById("pays1").length; i++) {
+                        if (document.getElementById("pays1").options[i].value === document.getElementById("pays2").value){
+                            document.getElementById("pays1").remove(i);
+                        }
+                    }
+                    document.getElementById("pays2").disabled = "true";
+                } else {
+                    if(document.getElementById("pays1").disabled){
+                        document.getElementById("pays2").disabled = "true";
+                    } else {
+                        document.getElementById("pays1").disabled = "true";
+                    }
+                    document.getElementById("valider").focus()
+                }
+            }
+        }
+        
+        function valid() {
+            
+            if(document.getElementById("cmd").value === "libre" || document.getElementById("cmd").value === "break"){
+                torespond = document.getElementById("cmd").value +" "+document.getElementById("pays2").value
+            }
+            else if(document.getElementById("cmd").value === "ally" || document.getElementById("cmd").value === "conquer"){
+                torespond = document.getElementById("pays1").value+" "+document.getElementById("cmd").value +" "+document.getElementById("pays2").value
+            }
+            document.getElementById("tweettext").innerHTML = torespond
+            document.getElementById("tweet").href = "https://twitter.com/intent/tweet?in_reply_to="+last_tweet_id+"&text="+torespond
+            document.getElementById("tweet").style.display = "flex"
+            document.getElementById("tweet").focus()
+        }
+
+    </script>
+</head>
+<body>
+    <div id="all">
+        <a id="tweet" style="display: none;"  href=""><div id="tweettext">dghr</div><div id="envoyer">*clique pour envoyer*</div></a>
+        <b>Générateur de commande pour <a target="_blank" href="https://www.twitter.com/botlaguerre">@botlaguerre</a></b>
+        <div id="buttons">
+            <button onclick="location.reload()">RECOMMENCER</button>
+            <select name="" id="pays1" class="pays" onchange="change()" disabled>
+                <option value="none" selected disabled hidden></option>
+            </select>
+            <select name="" id="cmd" onchange="changeCmd()">
+                <option value="none" selected hidden></option>
+            </select>
+            <select name="" id="pays2" class="pays" onchange="change()" disabled>
+                <option value="none" selected disabled hidden></option>
+            </select>
+            <button id="valider" onclick="valid()">VALIDER</button>
+        </div>
+        <img src="output.png" alt="Carte Actuelle">
+
+    </div>
+</body>
+</html>
