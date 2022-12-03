@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@botlaguerre</title>
     <style>
+        footer{
+            font-size: 23px;
+            margin-left:50px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 200;
+            color:gray
+        }
         #all{
             display: flex;
             align-items: center;
@@ -94,6 +101,7 @@
     <script>
         console.log(fetch("infos.js"))
         window.onload = function(){
+            document.getElementsByTagName("footer")[0].innerHTML = "Dernière mise à jour: "+heure
             liste = {libre:[],break:[],ally1:[],ally2:[],ally12:[],conquer:[]}
             for(let i=0; i<Object.keys(infos).length; i++) {
                 if(Object.values(infos)[i][0].length > 1){
@@ -261,7 +269,7 @@
             <button id="valider" onclick="valid()">VALIDER</button>
         </div>
         <img src="output.png" alt="Carte Actuelle">
-
     </div>
+    <footer>Dernière mise à jour à 12:30</footer>
 </body>
 </html>
